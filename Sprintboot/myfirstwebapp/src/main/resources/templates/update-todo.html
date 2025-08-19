@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add To-Do</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css}"/>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<div class="container mt-5">
+    <h2>Welcome, <span th:text="${name}">User</span></h2>
+    <hr>
+    <h3>Update To-Do Details</h3>
+
+    <form th:action="@{/update-to-do}" th:object="${toDo}" method="post" class="mt-4">
+        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{userName}" />
+
+        <fieldset class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <input type="text" id="description" class="form-control" th:field="*{description}" required />
+            <div th:if="${#fields.hasErrors('description')}" class="text-danger">
+                <p th:errors="*{description}">Description Error</p>
+            </div>
+        </fieldset>
+
+        <fieldset class="mb-3">
+            <label for="targetDate" class="form-label">Target Date</label>
+            <input type="text" id="targetDate" class="form-control" th:field="*{targetDate}" />
+            <div th:if="${#fields.hasErrors('targetDate')}" class="text-danger">
+                <p th:errors="*{targetDate}">targetDate Error</p>
+            </div>
+        </fieldset>
+
+        <div>
+            <label>Is Done</label>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+</div>
+
+<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js}"></script>
+<script type="text/javascript">
+
+    $('#targetDate').datepicker({
+    format: 'dd-mm-yyyy',
+
+});
+</script>
+</body>
+</html>

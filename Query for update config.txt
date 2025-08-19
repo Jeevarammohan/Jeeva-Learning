@@ -1,0 +1,8 @@
+update SHRDNPDLookUpDomainModelPlant_SubFlavour_Durations
+set task60rmwhextensionrequired=0
+
+update SHRDNPDLookUpDomainModelPlant_SubFlavour_Durations
+set NoOfRMWextSites=0
+
+
+

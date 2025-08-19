@@ -1,0 +1,26 @@
+
+.padMar{
+    background-color: burlywood;
+    padding: 20px;
+    margin: 10px;
+   
+    border-color: black;
+    border: 15px solid green;
+}
+
+form{
+    justify-content: center;
+    border: 1px solid black;
+    padding: 20px;
+    background-color: blanchedalmond;
+    font-family: 'Times New Roman', Times, serif;
+
+
+}
+li{
+    padding: 10px;
+}
+ul{
+    list-style: none;
+    
+}

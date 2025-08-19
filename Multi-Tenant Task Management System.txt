@@ -1,0 +1,143 @@
+Descriptive Problem Statement
+Project Title: Multi-Tenant Task Management System
+Problem Description
+You are tasked with building a Multi-Tenant Task Management System to help organizations manage tasks for their employees in an isolated and secure manner. Each organization will have its own space for users and tasks, ensuring no data is shared between tenants. The system must support features like user authentication, task creation and assignment, analytics, and a user-friendly interface. It should also leverage modern development practices, including microservices architecture, containerization, CI/CD pipelines, and cloud deployment.
+
+The system should also prioritize security by implementing OAuth and JWT for authentication and authorization and provide role-based access control (RBAC).
+
+Technology Stack
+Backend:
+
+Spring Boot: For building microservices.
+PostgresSQL: Relational database for persisting users, tasks, and tenant data.
+GraphQL: For efficient data querying and interaction between the frontend and backend.
+Spring Security: For OAuth 2.0 and JWT-based authentication and RBAC.
+Frontend:
+
+Angular: For building the user interface.
+Babel: To ensure compatibility across browsers.
+Testing: Jest for unit testing and Cypress/Playwright for end-to-end tests.
+Deployment:
+
+Docker: For containerizing the application.
+Kubernetes: For orchestration of containers.
+Hosting: Render, Netlify (Frontend), and ElephantSQL (Database).
+CI/CD:
+
+GitHub Actions: Automate build, test, and deployment.
+Documentation:
+
+Swagger: For API documentation.
+Cloud:
+
+AWS Free Tier: For hosting backend services.
+Vercel or Netlify: For deploying the frontend.
+Use Cases
+1. User Authentication and Authorization
+Description: Users should be able to log in via OAuth (Google/GitHub). After login, users receive a JWT token for session management.
+
+Flow:
+
+User visits the login page.
+Authenticates via OAuth (Google/GitHub).
+Backend generates a JWT token.
+Role-based access determines what actions the user can perform.
+Tech Stack: Spring Boot (Security), OAuth 2.0, JWT, Angular.
+
+2. Multi-Tenancy Support
+Description: Each organization should have its own isolated data. Users can belong to one or more organizations.
+
+Flow:
+
+A user registers an organization.
+Admin assigns roles to users (e.g., Admin, Member).
+Tasks and data are scoped to the user's organization.
+Tech Stack: PostgreSQL (tenant isolation), Spring Boot (RBAC), GraphQL (organization queries).
+
+3. Task Management
+Description: Users can create, update, delete, and assign tasks to other users within their organization.
+
+Flow:
+
+A user creates a task with a title, description, status, and assignee.
+Tasks can be updated or deleted by the task creator or admins.
+Assigned users are notified of new tasks.
+Tech Stack: Spring Boot, PostgreSQL, GraphQL, Angular, Firebase Cloud Messaging (notifications).
+
+4. Task Analytics Dashboard
+Description: Admins can view analytics for tasks, such as the number of completed tasks per user or overall task status.
+
+Flow:
+
+Admin selects an organization and a date range.
+System generates graphs showing task completion rates, user performance, etc.
+Tech Stack: GraphQL (data queries), Angular (charts using libraries like Chart.js or D3.js).
+
+5. API Documentation
+Description: Backend APIs should be documented for easy integration and testing.
+
+Flow:
+
+Developers can view Swagger documentation for all APIs.
+APIs include endpoints for authentication, user management, and tasks.
+Tech Stack: Swagger, Springfox, Spring Boot.
+
+6. Deployment and Orchestration
+Description: The system should be containerized and deployed in a scalable environment using free-tier cloud services.
+
+Flow:
+
+Backend and database containerized with Docker.
+Kubernetes manages service orchestration.
+Backend hosted on AWS/Render; Frontend hosted on Netlify/Vercel.
+Tech Stack: Docker, Kubernetes, AWS, Render, Vercel, Netlify.
+
+7. CI/CD Pipeline
+Description: Automate testing, building, and deployment.
+
+Flow:
+
+Code pushed to GitHub triggers GitHub Actions.
+CI pipeline runs unit tests (Jest, JUnit).
+If successful, the CD pipeline deploys the app.
+Tech Stack: GitHub Actions, Docker, Kubernetes.
+
+8. Middleware and Logging
+Description: Middleware should handle authentication validation, request logging, and error handling.
+
+Flow:
+
+Each API request goes through middleware.
+Unauthorized requests are blocked, and all requests are logged.
+Tech Stack: Spring Boot (Interceptor), SLF4J (Logging).
+
+9. End-to-End Testing
+Description: Ensure the system works as expected by simulating user flows.
+
+Flow:
+
+Cypress or Playwright tests simulate logging in, creating tasks, assigning tasks, and viewing analytics.
+Tech Stack: Cypress, Playwright.
+
+Deliverables
+Backend:
+
+Microservices for User and Task management.
+Secure APIs with OAuth 2.0 and JWT.
+GraphQL endpoints for flexible data queries.
+Frontend:
+
+Responsive Angular application.
+Dashboards for task management and analytics.
+End-to-end tested workflows.
+Deployment:
+
+Dockerized and deployed to cloud platforms.
+Kubernetes YAML files for deployment configuration.
+CI/CD:
+
+GitHub Actions for automating tests and deployments.
+Documentation:
+
+Swagger for backend APIs.
+ReadMe file for setup instructions.

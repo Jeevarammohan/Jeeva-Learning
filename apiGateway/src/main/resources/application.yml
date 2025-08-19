@@ -1,0 +1,46 @@
+server:
+  port:
+spring:
+  application:
+    name: spring-cloud-gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: service1
+          uri: lb://SERVICE1 # Use the service name registered with Eureka
+          predicates:
+            - Path=/service1/**
+          filters:
+            - TokenRelay=oauth2
+
+    discovery:
+      enabled: true
+      client:
+        serviceUrl:
+          defaultZone: http://localhost:8761/eureka/  # Eureka Server URL
+
+  eureka:
+    client:
+      serviceUrl:
+        defaultZone: http://localhost:8761/eureka/
+
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: my-gateway
+            client-secret: TMTs9DUPZDmnzC4Pn4RlWxUtf5on3K9T
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: openid, profile, email
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/master
+
+  oauth2:
+    resourceserver:
+      jwt:
+        issuer-uri: http://localhost:8080/realms/master  # Keycloak realm URI
+        jwk-set-uri: http://localhost:8080/realms/master/protocol/openid-connect/certs  # Keycloak public keys URI for JWT verification

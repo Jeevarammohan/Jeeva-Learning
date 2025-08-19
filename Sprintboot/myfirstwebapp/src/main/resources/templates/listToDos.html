@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" />
+    <title>To-Do List</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th, td {
+            border: 1px solid #999;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .overdue {
+            background-color: #ffd6d6;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<div class="container">
+<h2>Welcome, <span th:text="${name}">User</span></h2>
+    <hr>
+<h3>Your To-Do List</h3>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Description</th>
+        <th>Done?</th>
+        <th>Target Date</th>
+        <th>Status</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="todo, stat : ${toDos}"
+        th:class="${todo.targetDate.isBefore(T(java.time.LocalDate).now())} ? 'overdue' : ''">
+        <td th:text="${todo.id}">1</td>
+        <td th:text="${todo.description}">Task description</td>
+        <td th:text="${todo.isDone} ? 'Yes' : 'No'">Yes</td>
+        <td th:text="${todo.targetDate}">2025-01-01</td>
+        <td th:text="${todo.targetDate.isBefore(T(java.time.LocalDate).now())} ? 'Overdue' : 'On Track'">
+            Status
+        </td>
+
+        <td><a th:href="@{/delete-to-do(id=${todo.id})}" class="btn btn-warning">Delete </a></td>
+        <td><a th:href="@{/update-to-do(id=${todo.id})}" class="btn btn-success">Update</a></td>
+
+    </tr>
+    </tbody>
+</table>
+    <a href="add-to-do" class="btn btn-success">Add To Do</a>
+</div>
+<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.min.js}"></script>
+</body>
+</html>
