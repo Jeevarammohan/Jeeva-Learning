@@ -1,8 +1,11 @@
 package com.learning.question_service.controller;
 
 import com.learning.question_service.model.Question;
+import com.learning.question_service.model.QuestionWrapper;
+import com.learning.question_service.model.Response;
 import com.learning.question_service.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +17,9 @@ public class QuestionController {
 
     @Autowired
     QuestionService questionService;
+
+    @Autowired
+    Environment  environment;
 
     @GetMapping("allQuestions")
     public ResponseEntity<List<Question>> getAllQuestions(){
@@ -28,5 +34,24 @@ public class QuestionController {
     @PostMapping("add")
     public ResponseEntity<String> addQuestion(@RequestBody Question question){
         return questionService.addQuestion(question);
+    }
+
+    @GetMapping("generate")
+    public ResponseEntity<List<Integer>> getQuestionForQuiz(@RequestParam String category,@RequestParam Integer numQ){
+        return questionService.getQuestionForQuiz(category,numQ);
+
+    }
+
+    @PostMapping("getQuestion")
+    public ResponseEntity<List<QuestionWrapper>> getQuestion(@RequestBody List<Integer> questionsIds){
+        return questionService.getQuestionsFromId(questionsIds);
+    }
+
+    @PostMapping("getScore")
+    public ResponseEntity<Integer> getScore(@RequestBody List<Response> responses){
+        System.out.println(environment.getProperty("local.server.port"));
+        return questionService.getScore(responses);
+
+
     }
 }

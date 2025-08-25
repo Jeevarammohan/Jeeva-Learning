@@ -1,4 +1,4 @@
-package com.learning.question_service.model;
+package com.learning.quiz_service.model;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
