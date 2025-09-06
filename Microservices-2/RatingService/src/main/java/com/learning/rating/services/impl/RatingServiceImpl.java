@@ -13,6 +13,8 @@ public class RatingServiceImpl implements RatingService {
 
     @Autowired
     private RatingRepository ratingRepository;
+
+
     @Override
     public Rating createRating(Rating rating) {
         return ratingRepository.save(rating);
