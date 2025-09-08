@@ -4,14 +4,16 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/rating-service
-
+  config:
+    import: optional:configserver:http://localhost:8085
 server:
   port: 8083
-eureka:
-    client:
-      fetch-registry: true
-      register-with-eureka: true
-      service-url:
-        defaultZone: http://localhost:8761/eureka/
-    instance:
-      prefer-ip-address: true
+
+#okta configuration for API Gateway
+okta:
+  oauth2:
+    issuer: https://integrator-2489353.okta.com/oauth2/default
+    audience: api://default
+    client-id: 0oav7eg3p35EWHU3v697
+    client-secret: TZ5T8OJCTzoFIRcFrDfCtbmmeV2DNCj6TK3vcGlIl-bjctTH8Pn_MccbIwiNnE92
+    scopes: openid , profile, email , offline_access

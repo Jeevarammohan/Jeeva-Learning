@@ -1,6 +1,8 @@
 spring:
   application:
     name: user-service
+#  profiles:
+#    active: dev
   datasource:
     url: jdbc:mysql://localhost:3306/user_service
     username: root
@@ -13,13 +15,77 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
     show-sql: true
+  config:
+    import:
+      configserver:http://localhost:8085
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://integrator-2489353.okta.com/oauth2/default
+      client:
+        registration:
+          my-internal-client:
+            provider: okta
+            authorization-grant-type: client_credentials
+            scope:
+              - internal
+            client-id: 0oav7eg3p35EWHU3v697
+            client-secret: TZ5T8OJCTzoFIRcFrDfCtbmmeV2DNCj6TK3vcGlIl-bjctTH8Pn_MccbIwiNnE92
+
+        provider:
+          okta:
+            issuer-uri: https://integrator-2489353.okta.com/oauth2/default
+
 server:
   port: 8081
-eureka:
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    prefer-ip-address: true
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+      web:
+        exposure:
+          include: health
+  endpoint:
+    health:
+      show-details: always
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      ratingHotelBreaker:
+        register-health-indicator: true
+        event-consumer-buffer-size: 10
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state:
+          seconds: 6s
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-size: 10
+        sliding-window-type: count_based
+
+  retry:
+    instances:
+      ratingHotelService:
+        max-attempts: 3
+        wait-duration:
+          seconds: 5s
+  ratelimiter:
+    instances:
+      userRateLimiter:
+        limit-refresh-period: 2s
+        limit-for-period: 2
+        timeout-duration: 2s
+
+
+#okta configuration for user service
+okta:
+  oauth2:
+    issuer: https://integrator-2489353.okta.com/oauth2/default
+    audience: api://default
+    client-id: 0oav7eg3p35EWHU3v697
+    client-secret: TZ5T8OJCTzoFIRcFrDfCtbmmeV2DNCj6TK3vcGlIl-bjctTH8Pn_MccbIwiNnE92
+    scopes: openid , profile, email , offline_access
+
