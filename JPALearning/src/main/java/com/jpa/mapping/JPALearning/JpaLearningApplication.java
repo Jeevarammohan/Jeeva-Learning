@@ -28,5 +28,6 @@ public class JpaLearningApplication implements CommandLineRunner {
         Model model2 = new Model(2, "ZET", manufactures);
         modelRepository.save(model1);
         modelRepository.save(model2);
+        
     }
 }
